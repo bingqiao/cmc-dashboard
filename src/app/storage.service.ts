@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Portfolio } from './portfolio';
+import { LOCAL_STORAGE } from '@ng-toolkit/universal';
 
 @Injectable({
   providedIn: 'root'
@@ -7,13 +8,13 @@ import { Portfolio } from './portfolio';
 export class StorageService {
   key = 'portfolios';
 
-  constructor() { }
+  constructor(@Inject(LOCAL_STORAGE) private localStorage: any, ) { }
 
   save(portfolios: Portfolio[]) {
-    localStorage.setItem(this.key, JSON.stringify(portfolios));
+    this.localStorage.setItem(this.key, JSON.stringify(portfolios));
   }
 
   load() {
-    return JSON.parse(localStorage.getItem(this.key));
+    return JSON.parse(this.localStorage.getItem(this.key));
   }
 }
