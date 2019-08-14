@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CmcClientService } from './cmc-client.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,14 +7,10 @@ import { CmcClientService } from './cmc-client.service';
 })
 export class AppComponent implements OnInit {
   title = 'cmc-dashboard';
-  data: any;
-
-  constructor(private cmcClient: CmcClientService) {}
+ 
+  constructor() {}
 
   ngOnInit() {
-    this.cmcClient.getListing().subscribe( (result: any) => {
-      this.data = result.data;
-    });
   }
 
 }

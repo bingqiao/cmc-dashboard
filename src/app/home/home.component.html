@@ -1,0 +1,126 @@
+<section class="hero is-fullheight">
+    <div class="hero-head has-text-centered">
+        <div class="is-vertical-center">
+            <div class="title">
+                CMC Dashboard
+            </div>
+            <div *ngIf="!portfolio" class="subtitle" style="width: 70%;">
+                To create portfolio, fill input box with portfolio name;
+                Click button 'New' then button 'Save'.
+                Select the saved portfolio via 'Dropdown' to add currencies to it from the list below.
+            </div>
+            <div *ngIf="portfolio" class="subtitle" style="width: 70%;">
+                Select portfolio via 'Dropdown' to display. Change quantity in input box.
+                You can delete selected portfolio too.
+                Remeber to save after updates or deletes!
+            </div>
+        </div>
+    </div>
+    <div class="hero-body">
+        <div class="container">
+            <div class="tabs is-boxed">
+                <ul>
+                    <li [class.is-active]="!portfolio"><a (click)="selectTab(false)">Listing</a></li>
+                    <li [class.is-active]="portfolio"><a (click)="selectTab(true)">Portfolio</a></li>
+                </ul>
+            </div>
+            <div class="panel" style="min-height: 65vh">
+                <div [hidden]="portfolio">
+                    <nav class="level">
+                        <!-- Left side -->
+                        <div class="level-left">
+                            <div class="level-item">
+                                <div class="select">
+                                    <select (change)="selectPortfolio($event.target.value)">
+                                        <option></option>
+                                        <option *ngFor="let item of portfolios" [value]="item.id" [selected]="selectedPortfolio && selectedPortfolio.id === item.id">
+                                            {{item.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input" type="text" [formControl]="portfolioName"
+                                            placeholder="Create portfolio">
+                                    </p>
+                                    <p class="control">
+                                        <button class="button is-success" (click)="createPortfolio()">
+                                            New
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div class="field">
+                                    <p class="level-item"><a class="button is-success" (click)="save()">Save</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right side -->
+                        <div class="level-right">
+                            <div class="level-item">
+                                <p class="subtitle is-5">
+                                    <strong>{{total}}</strong>
+                                </p>
+                            </div>
+                            <div class="level-item">
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <input class="input" type="text" [formControl]="search"
+                                            placeholder="Find a currency">
+                                    </p>
+                                    <p class="control">
+                                        <button class="delete is-small" (click)="clear()">
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="level-item"><a class="button is-success" (click)="refresh()">Refresh</a></p>
+                        </div>
+                    </nav>
+
+                    <div class="box">
+                        <div class="tags are-small">
+                            <span *ngFor="let item of tags" class="tag is-primary">
+                                {{item}}
+                                <button class="delete is-small" (click)="deleteTag(item)"></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <a class="list-item" style="background-color: white;">
+                        <div>symbol</div>
+                        <div>name</div>
+                        <div>price</div>
+                        <div>last updated</div>
+                        <div></div>
+                    </a>
+
+                    <div class="list is-hoverable" style="height: 60vh; max-height: 40vh; overflow-y:auto">
+                        <a *ngFor="let item of filteredData" class="list-item">
+                            <div>{{ item.symbol}}</div>
+                            <div>{{ item.name}}</div>
+                            <div>{{ item.quote.USD.price}}</div>
+                            <div>{{ item.quote.USD.last_updated | date:'h:mm a d/MM/yy'}}</div>
+                            <div>
+                                <button class="is-small" (click)="addTag(item.symbol)">add</button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div [hidden]="!portfolio">
+                    <app-portfolio #portfolioRef></app-portfolio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-foot has-text-centered">
+        &copy; Copyright 2019 <a href="https://github.com/bingqiao"><strong>Bing Qiao</strong></a>. All rights reserved.
+    </div>
+</section>

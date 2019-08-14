@@ -1,0 +1,43 @@
+a {
+    div {
+        min-width: 100px;
+        display: inline-block;
+    }
+
+    div:nth-child(2) {
+        min-width: 250px;
+    }
+
+    div:nth-child(3) {
+        min-width: 200px;
+    }
+
+    div:nth-child(4) {
+        min-width: 150px;
+    }
+
+    div:nth-child(5) {
+        min-width: 50px;
+        text-align: right;
+    }
+}
+
+.hero .tabs ul {
+    align-items: center;
+    border-bottom-color: #dbdbdb;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    justify-content: flex-start
+}
+
+.is-vertical-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    flex-direction: column;
+
+ }
