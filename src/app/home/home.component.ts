@@ -135,6 +135,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadPortfolios() {
-    this.portfolios = this.storage.load();
+    this.portfolios = this.storage.load() || [];
   }
 }
