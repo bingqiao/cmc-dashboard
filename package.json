@@ -23,7 +23,9 @@
     "build:serverless:deploy": "npm run build:serverless && npm run deploy",
     "deploy": "serverless deploy",
     "build:server:prod": "ng run cmc-dashboard:server && webpack --config webpack.server.config.js --progress --colors",
-    "build:server:serverless": "ng run cmc-dashboard:server:serverless && webpack --config webpack.server.config.js --progress --colors"
+    "build:server:serverless": "ng run cmc-dashboard:server:serverless && webpack --config webpack.server.config.js --progress --colors",
+    "docker:build": "docker build --rm -t cmc-dashboard .",
+    "docker:run": "docker run --rm -p 9080:8080 -dit --name cmcd cmc-dashboard"
   },
   "private": true,
   "dependencies": {

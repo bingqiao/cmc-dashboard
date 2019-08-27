@@ -13,12 +13,9 @@ export class PortfolioComponent implements OnInit {
   portfolios: Portfolio[];
   selectedPortfolio: Portfolio;
 
-  _data = {};
-
   data = [];
 
   controls: {[key: string]: FormControl} = {};
-  _total: number;
 
   constructor(private cmcClient: CmcClientService, private storage: StorageService) {
     this.loadPortfolios();
@@ -56,9 +53,7 @@ export class PortfolioComponent implements OnInit {
         const item = result.data[key];
         this.controls[item.symbol] = new FormControl(item.quantity);
       });
-      this._data = result.data;
-      //this.data = Object.values(this._data);
-      this.data = Object.values(this._data);
+      this.data = Object.values(result.data);
       this.data.forEach((item: any) => {
         this.controls[item.symbol].setValue(currencies[item.symbol]);
       });
@@ -103,6 +98,5 @@ export class PortfolioComponent implements OnInit {
   reset() {
     this.selectedPortfolio = null;
     this.data = [];
-    this._data = {};
   }
 }

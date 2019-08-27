@@ -8,9 +8,9 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display CMC Dashboard title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to cmc-dashboard!');
+    expect(page.getTitleText()).toEqual('CMC Dashboard');
   });
 
   afterEach(async () => {

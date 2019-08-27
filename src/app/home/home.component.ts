@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CmcClientService } from '../cmc-client.service';
 import { Portfolio } from '../portfolio';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 import { StorageService } from '../storage.service';
 import { PortfolioComponent } from '../portfolio/portfolio.component';
@@ -17,11 +17,16 @@ export class HomeComponent implements OnInit {
   total: number;
   portfolio: boolean;
 
+  units: string[] = ['USD', 'GBP'];
+
   portfolios: Portfolio[] = [];
 
-  portfolioName = new FormControl('');
+  portfolioName = new FormControl('', [
+    Validators.required, this.noWhitespaceValidator]);
 
   selectedPortfolio: Portfolio;
+
+  selectedUnit: string = this.units[0];
 
   search = new FormControl('');
 
@@ -33,6 +38,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+  }
+
+  noWhitespaceValidator(control: FormControl) {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { 'whitespace': true };
   }
 
   selectTab(portfolio: boolean) {
@@ -68,6 +79,15 @@ export class HomeComponent implements OnInit {
         this.selectedPortfolio = item;
       }
     });
+  }
+
+  selectUnit(unit: string) {
+    this.units.forEach(item => {
+      if (item === unit) {
+        this.selectedUnit = item;
+      }
+    });
+    this.refresh();    
   }
 
   validateSelectedPortfolio() {
@@ -119,7 +139,7 @@ export class HomeComponent implements OnInit {
   }
 
   load() {
-    this.cmcClient.getListing().subscribe( (result: any) => {
+    this.cmcClient.getListing(this.selectedUnit).subscribe( (result: any) => {
       this.data = result.data;
     });
   }

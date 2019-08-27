@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+import { StorageService } from '../storage.service';
+
 import { HomeComponent } from './home.component';
 import { PortfolioComponent } from '../portfolio/portfolio.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +20,9 @@ describe('HomeComponent', () => {
       declarations: [
         PortfolioComponent,
         HomeComponent
+      ],
+      providers: [
+        {provide: StorageService, useValue: jasmine.createSpyObj('StorageService', ['save', 'load'])}
       ]
     })
       .compileComponents();
